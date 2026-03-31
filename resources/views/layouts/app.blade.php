@@ -60,12 +60,13 @@
                class="{{ request()->routeIs('alerts.*') ? 'active' : '' }}">
                 <i class="bi bi-bell me-2"></i>Alertes
             </a>
-        </nav>
-    </div>
-    <a href="{{ route('logs.index') }}"
+            <a href="{{ route('logs.index') }}"
    class="{{ request()->routeIs('logs.*') ? 'active' : '' }}">
     <i class="bi bi-journal-text me-2"></i>Logs
 </a>
+        </nav>
+    </div>
+    
 
     <!-- Main Content -->
     <div class="main-content">

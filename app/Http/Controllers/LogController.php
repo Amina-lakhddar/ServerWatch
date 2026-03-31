@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use APP\Models\Log;
+use App\Models\Log;
 
 class LogController extends Controller
 {
@@ -12,3 +12,4 @@ class LogController extends Controller
         return view('logs.index',compact('logs'));
     }
 }
+fd
