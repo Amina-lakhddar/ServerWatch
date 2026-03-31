@@ -55,6 +55,7 @@
                         <td>
                             <div class="progress" style="height:16px; width:100px;">
                                 <div class="progress-bar {{ $metric->valeur > 80 ? 'bg-danger' : 'bg-success' }}"
+                                     id="bar-{{ $metric->type }}"
                                      style="width:{{ $metric->valeur }}%">
                                     {{ $metric->valeur }}%
                                 </div>
@@ -95,4 +96,22 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+    setInterval(function() {
+        fetch('/api/metrics/latest')
+            .then(r => r.json())
+            .then(data => {
+                data.forEach(metric => {
+                    let bar = document.getElementById('bar-' + metric.type);
+                    if (bar) {
+                        bar.style.width = metric.valeur + '%';
+                        bar.textContent = metric.valeur + '%';
+                    }
+                });
+            });
+    }, 10000);
+</script>
 @endsection
