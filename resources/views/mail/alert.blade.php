@@ -122,7 +122,7 @@
 
             <!-- Button -->
             <div style="text-align:center;">
-                <a href="{{ url('/alerts') }}" class="btn">
+                <a href="http://127.0.0.1:8000/alerts" class="btn">
                     Voir les Alertes
                 </a>
             </div>

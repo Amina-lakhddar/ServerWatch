@@ -12,7 +12,7 @@ class AlertMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    //  Alert li ghadi ntbatho f email
+    
     public Alert $alert;
 
     public function __construct(Alert $alert)
