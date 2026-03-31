@@ -62,6 +62,10 @@
             </a>
         </nav>
     </div>
+    <a href="{{ route('logs.index') }}"
+   class="{{ request()->routeIs('logs.*') ? 'active' : '' }}">
+    <i class="bi bi-journal-text me-2"></i>Logs
+</a>
 
     <!-- Main Content -->
     <div class="main-content">

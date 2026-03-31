@@ -22,5 +22,11 @@ Route::patch('/alerts/{alert}/read', [AlertController::class, 'markAsRead'])->na
 Route::delete('/alerts/{alert}', [AlertController::class, 'destroy'])->name('alerts.destroy');
 
 //logs
-// Zid had ligne m3a les autres routes:
 Route::get('/logs', [App\Http\Controllers\LogController::class, 'index'])->name('logs.index');
+// API route latest métriques
+Route::get('/api/metrics/latest', function () {
+    return App\Models\Metric::with('serveur')
+                            ->latest()
+                            ->take(10)
+                            ->get();
+})->name('api.metrics');
