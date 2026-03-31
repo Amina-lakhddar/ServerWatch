@@ -12,4 +12,3 @@ class LogController extends Controller
         return view('logs.index',compact('logs'));
     }
 }
-fd
