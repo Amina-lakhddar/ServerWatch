@@ -43,7 +43,7 @@
                         <th>Date</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="metrics-table">
                     @forelse($recentMetrics as $metric)
                     <tr>
                         <td>{{ $metric->serveur->nom ?? '-' }}</td>
@@ -55,7 +55,7 @@
                         <td>
                             <div class="progress" style="height:16px; width:100px;">
                                 <div class="progress-bar {{ $metric->valeur > 80 ? 'bg-danger' : 'bg-success' }}"
-                                     id="bar-{{ $metric->type }}"
+                                     id="bar-{{ $metric->type }}-{{ $metric->serveur_id }}"
                                      style="width:{{ $metric->valeur }}%">
                                     {{ $metric->valeur }}%
                                 </div>
@@ -95,23 +95,33 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('scripts')
 <script>
-    setInterval(function() {
-        fetch('/api/metrics/latest')
-            .then(r => r.json())
-            .then(data => {
-                data.forEach(metric => {
-                    let bar = document.getElementById('bar-' + metric.type);
-                    if (bar) {
-                        bar.style.width = metric.valeur + '%';
-                        bar.textContent = metric.valeur + '%';
-                    }
-                });
+setInterval(function() {
+    fetch('/api/metrics/latest')
+        .then(r => r.json())
+        .then(data => {
+            let tbody = document.getElementById('metrics-table');
+            tbody.innerHTML = '';
+            data.forEach(metric => {
+                tbody.innerHTML += `
+                <tr>
+                    <td>${metric.serveur ? metric.serveur.nom : '-'}</td>
+                    <td><span class="badge ${metric.type === 'CPU' ? 'bg-primary' : metric.type === 'RAM' ? 'bg-info' : 'bg-warning text-dark'}">${metric.type}</span></td>
+                    <td>
+                        <div class="progress" style="height:16px; width:100px;">
+                            <div class="progress-bar ${metric.valeur > 80 ? 'bg-danger' : 'bg-success'}"
+                                 style="width:${metric.valeur}%">
+                                ${metric.valeur}%
+                            </div>
+                        </div>
+                    </td>
+                    <td>${metric.date}</td>
+                </tr>`;
             });
-    }, 10000);
+        });
+}, 10000);
 </script>
 @endsection
